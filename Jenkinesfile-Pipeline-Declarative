@@ -69,15 +69,15 @@ post{
 	 emailext body: '''Build is over - Declarative way..
 
 	 Regards,
-	 Mithun Technologies,
-	 9980923226''', subject: 'Build is successfull - Declarative way..', to: 'devopstrainingblr@gmail.com,bhaskar0504@gmail.com'
+	 N Hanif,
+	 89194xx776''', subject: 'Build is successfull - Declarative way..', to: 'hanifdevops04@gmail.com'
    }
    failure{
    emailext body: '''Build is  failed - Declarative way..
 
    Regards,
-   Mithun Technologies,
-   9980923226''', subject: 'Build is over - Declarative way..', to: 'devopstrainingblr@gmail.com,bhaskar0504@gmail.com'
+   N Hanif,
+   8919xxx776''', subject: 'Build is over - Declarative way..', to: 'hanifdevops04@gmail.com'
    }
   }
 
