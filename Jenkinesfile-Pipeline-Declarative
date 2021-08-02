@@ -26,7 +26,7 @@ stages{
   stage('CheckOutCode')
   {
     steps{
-   git branch: 'development', credentialsId: 'c5cf5bbd-3c1f-4a89-8086-097d2fa1629a', url: 'https://github.com/hanifsoftwaresolutions-ec-projects/maven-web-application.git' 
+    git branch: 'development', credentialsId: 'c5cf5bbd-3c1f-4a89-8086-097d2fa1629a', url: 'https://github.com/hanifsoftwaresolutions-ec-projects/maven-web-application.git'
 	}
   }
   
