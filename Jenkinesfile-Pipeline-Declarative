@@ -53,7 +53,7 @@ stage('ExecuteSonarqubeReport')
   {
     steps{
     sshagent(['b518b80e-d8a4-4e3a-807e-4236e0060421']) {
-    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@15.207.117.204:/opt/apache-tomcat-9.0.50/webapps/"  
+    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@http://13.232.225.58:/opt/apache-tomcat-9.0.50/webapps/"  
    
     }
 	}
