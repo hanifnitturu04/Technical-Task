@@ -89,6 +89,5 @@ pipeline {
        8919xxx776''', subject: 'Build is over - Declarative way..', to: 'hanifdevops04@gmail.com'
        }
       }
-
-    }
     */
+}
