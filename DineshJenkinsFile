@@ -1,26 +1,24 @@
 pipeline {
-
-  agent any;
+agent any;
 
   tools {
     maven 'Maven3.8.3'
   }
 
-  /*
   triggers{
-  pollSCM('* * * * *')
+  // pollSCM('* * * * *')
   cron('* * * * *')
-  githubPush()
+  // githubPush()
   }
-  */
+  
   /*
   triggers {
       parameterizedCron(env.BRANCH_NAME == "master" ? "0 12 * * * % RUN_E2E=true;MODE=parallel;SHOULD_BUILD_RELEASE=no" : "")
   }
-  */
   properties {
     properties([pipelineTriggers([pollSCM('* * * * *')])])
   }
+*/
 
   options {
     //Add the timestamp to the console output
