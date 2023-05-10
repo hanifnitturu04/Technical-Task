@@ -1,97 +1,94 @@
-pipeline
-{
+pipeline {
 
-agent any;
+  agent any;
 
-tools {
- maven 'Maven3.8.3'
-}
-
-/*
-triggers{
-pollSCM('* * * * *')
-}
-*/
-/*
-triggers {
-    parameterizedCron(env.BRANCH_NAME == "master" ? "0 12 * * * % RUN_E2E=true;MODE=parallel;SHOULD_BUILD_RELEASE=no" : "")
-}
-*/
-properties{
-properties([pipelineTriggers([pollSCM('* * * * *')])])
-}
-
-options{
-//Add the timestamp to the console output
-timestamps()
-//Discard old buids
-buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '3'))
-}
-
-
-stages{
-
-  stage('CheckOutCode')
-  {
-    steps{
-    git branch: 'development', credentialsId: 'c5cf5bbd-3c1f-4a89-8086-097d2fa1629a', url: 'https://github.com/hanifsoftwaresolutions-ec-projects/maven-web-application.git'
-	}
+  tools {
+    maven 'Maven3.8.3'
   }
-  
-  stage('Build')
-  {
-   steps{
-   sh "mvn clean package"
-   }
+
+  /*
+  triggers{
+  pollSCM('* * * * *')
+  cron('* * * * *')
+  githubPush()
   }
-  
-  
-/*
-stage('ExecuteSonarqubeReport')
-  {
-    steps{
-	sh "mvn sonar:sonar"
-	}
+  */
+  /*
+  triggers {
+      parameterizedCron(env.BRANCH_NAME == "master" ? "0 12 * * * % RUN_E2E=true;MODE=parallel;SHOULD_BUILD_RELEASE=no" : "")
   }
-  
-  stage('UploadArtifactsintoNexus')
-  {
-    steps{
-	sh "mvn deploy"
-	}
+  */
+  properties {
+    properties([pipelineTriggers([pollSCM('* * * * *')])])
   }
-  
-  stage('DeployAppIntoTomcatServer')
-  {
-    steps{
-    sshagent(['b518b80e-d8a4-4e3a-807e-4236e0060421']) {
-    sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@http://13.232.225.58:/opt/apache-tomcat-9.0.50/webapps/"  
-   
+
+  options {
+    //Add the timestamp to the console output
+    timestamps()
+    //Discard old buids
+    buildDiscarder(logRotator(artifactDaysToKeepStr: '', artifactNumToKeepStr: '3', daysToKeepStr: '', numToKeepStr: '3'))
+  }
+
+  stages {
+
+    stage('CheckOutCode') {
+      steps {
+        git branch: 'development', credentialsId: 'c5cf5bbd-3c1f-4a89-8086-097d2fa1629a', url: 'https://github.com/hanifsoftwaresolutions-ec-projects/maven-web-application.git'
+      }
     }
-	}
-  }
-  
-  
-    
-}
 
-post{
-  
-   success{
-	 emailext body: '''Build is over - Declarative way..
+    stage('Build') {
+      steps {
+        sh "mvn clean package"
+      }
+    }
 
-	 Regards,
-	 N Hanif,
-	 89194xx776''', subject: 'Build is successfull - Declarative way..', to: 'hanifdevops04@gmail.com'
-   }
-   failure{
-   emailext body: '''Build is  failed - Declarative way..
+    /*
+    stage('ExecuteSonarqubeReport')
+      {
+        steps{
+    	sh "mvn sonar:sonar"
+    	}
+      }
+      
+      stage('UploadArtifactsintoNexus')
+      {
+        steps{
+    	sh "mvn deploy"
+    	}
+      }
+      
+      stage('DeployAppIntoTomcatServer')
+      {
+        steps{
+        sshagent(['b518b80e-d8a4-4e3a-807e-4236e0060421']) {
+        sh "scp -o StrictHostKeyChecking=no target/maven-web-application.war ec2-user@http://13.232.225.58:/opt/apache-tomcat-9.0.50/webapps/"  
+       
+        }
+    	}
+      }
+      
+      
+        
+    }
 
-   Regards,
-   N Hanif,
-   8919xxx776''', subject: 'Build is over - Declarative way..', to: 'hanifdevops04@gmail.com'
-   }
-  }
+    post{
+      
+       success{
+    	 emailext body: '''Build is over - Declarative way..
 
-}
-*/
+    	 Regards,
+    	 N Hanif,
+    	 89194xx776''', subject: 'Build is successfull - Declarative way..', to: 'hanifdevops04@gmail.com'
+       }
+       failure{
+       emailext body: '''Build is  failed - Declarative way..
+
+       Regards,
+       N Hanif,
+       8919xxx776''', subject: 'Build is over - Declarative way..', to: 'hanifdevops04@gmail.com'
+       }
+      }
+
+    }
+    */
