@@ -24,12 +24,20 @@
 		<!-- <sonar.host.url>http://13.232.5.182:9000/</sonar.host.url>
 		<sonar.login>admin</sonar.login>
 		<sonar.password>admin</sonar.password> -->
+		<sonar.host.url>http://13.233.165.23:9000/</sonar.host.url>
+		<sonar.login>admin</sonar.login>
+		<sonar.password>passw0rd</sonar.password> 
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
 
 	<dependencies>
+		<dependency>
+                        <groupId>com.mss</groupId>
+                        <artifactId>mail</artifactId>
+                        <version>1.0.0</version>
+                </dependency>
 		
 		<dependency>
 			<groupId>org.json</groupId>
@@ -94,7 +102,13 @@
 	</dependencies>
 	
 	<distributionManagement>
-	
+	    <!-- repository in nexus for dependencies -->
+	    <repository>
+	      <id>nexus</id>
+	      <name>Adec-Task-Remote-Repo</name>
+	      <url>http://13.234.110.11:8081/repository/Adec-Task-Remote-Repo/</url>
+	    </repository>
+	    
 	    <repository>
 	      <id>nexus</id>
 	      <name>Mithun Technologies Releases Nexus Repository</name>
