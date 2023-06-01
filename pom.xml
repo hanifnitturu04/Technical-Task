@@ -31,7 +31,14 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 	</properties>
-
+	<!-- repository in nexus for dependencies -->
+	<repositories>
+	        <repository>
+	                <id>nexus</id>
+	                <name>Adec-Task-Remote-Repo</name>
+	                <url>http://13.234.110.11:8081/repository/Adec-Task-Remote-Repo/</url>
+	        </repository>
+        </repositories>
 	<dependencies>
 		<dependency>
                         <groupId>com.mss</groupId>
@@ -95,12 +102,7 @@
 	</dependencies>
 	
 	<distributionManagement>
-	    <!-- repository in nexus for dependencies -->
-	    <repository>
-	      <id>nexus</id>
-	      <name>Adec-Task-Remote-Repo</name>
-	      <url>http://13.234.110.11:8081/repository/Adec-Task-Remote-Repo/</url>
-	    </repository>
+	  
 	  
 	    <snapshotRepository>
 	      <id>nexus</id>
