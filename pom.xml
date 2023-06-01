@@ -112,7 +112,7 @@
 	    <snapshotRepository>
 	      <id>nexus</id>
 	      <name>Adec Task Artifact Uploads</name>
-	      <url><http://13.234.110.11:8081/repository/Build-Artifacts-Upload//url>
+	      <url>http://13.234.110.11:8081/repository/Build-Artifacts-Upload/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
