@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springappdeployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: springapp
+  template:
+    metadata:
+      name: springapppod
+      labels:
+        app: springapp
+    spec:
+      containers:
+      - name: springappcontainer
+        image: hanifdockerrepo/spring-boot-mongo:3
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MONGO_DB_USERNAME
+          value: devdb
+        - name: MONGO_DB_PASSWORD
+          value: devdb@123
+        - name: MONGO_DB_HOSTNAME
+          value: mongodbsvc
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: springappsvc
+spec:
+  selector:
+    app: springapp
+  type: NodePort
+  ports:
+  - port: 80
+    targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodbdeployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      name: mongodbpod
+      labels:
+        app: mongodb
+    spec:
+      containers:
+      - name: mongodbcontainer
+        image: mongo
+        ports:
+        - containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          value: devdb
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          value: devdb@123
+        volumeMounts:
+        - name: ebs-volume
+          mountPath: /data/db
+      volumes:
+      - name: ebs-volume
+	    awsElasticBlockStore:
+          volumeID: vol-013fc8c79e653e534 
+          fsType: ext4
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodbsvc
+spec:
+  selector:
+    app: mongodb
+  ports:
+  - port: 27017
+    targetPort: 27017
