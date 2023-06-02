@@ -1,0 +1,58 @@
+pipeline{
+    agent any
+tools{
+    maven "Maven3.8.3"
+}
+stages{
+    stage("Get the code from GitHub"){
+        steps{
+            git credentialsId: 'Git-Cred', url: 'https://github.com/hanifnitturu04/Technical-Task.git'
+        }
+    }
+    
+    stage("Build the package"){
+        steps{
+            sh "mvn clean package"
+        }
+    }
+    
+    stage("sonarqube"){
+        steps{
+            sh "mvn sonar:sonar"
+        }
+    }
+    
+    stage("upload package in NEXUS"){
+        steps{
+            sh "mvn clean deploy"
+        }
+    }
+	
+    stage("Docker Build Image"){
+	    steps{
+            sh "docker build -t 172.31.10.181:8083/maven-web-app:1 ."
+        }
+	}
+    
+    stage("Docker Login with Nexus"){
+	    steps{
+            withCredentials([string(credentialsId: 'Nexus_Credentials', variable: 'Nexus_Credentials')]) {
+                sh "docker login -u admin -p ${Nexus_Credentials} 172.31.10.181:8083" 
+            }
+		}
+    }
+    
+    stage("Pushing image to the Nexus Private Repository"){
+	    steps{
+            sh "docker push 172.31.10.181:8083/maven-web-app:1" 
+		}
+    }
+    
+    stage("Deploying into K8s Cluster"){ 
+	    steps{
+            sh "kubectl apply -f  mavenwebappnexusrepo.yaml --kubeconfig=~/.kube/config"
+	    }
+    }
+
+} //stages closing
+} //pipeline closing
